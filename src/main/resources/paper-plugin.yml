@@ -1,0 +1,5 @@
+name: PrecipitationOff
+version: '${project.version}'
+main: vodzinskiy.precipitationoff.PrecipitationOff
+api-version: '1.20'
+authors: [Vodzinskiy]
