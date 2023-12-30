@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import static vodzinskiy.precipitationoff.models.Type.STANDARD;
+import static vodzinskiy.precipitationoff.models.Type.NOT_DEFINED;
 
 @Getter
 @Setter
@@ -15,9 +15,11 @@ import static vodzinskiy.precipitationoff.models.Type.STANDARD;
 public class Area {
     private Coordinate start;
     private Coordinate end;
-    private Type type = STANDARD;
+    private Type type = NOT_DEFINED;
+    private Owner owner;
 
-    public Area(Coordinate start) {
+    public Area(Coordinate start, Owner owner) {
+        this.owner = owner;
         this.start = start;
         this.end = null;
     }

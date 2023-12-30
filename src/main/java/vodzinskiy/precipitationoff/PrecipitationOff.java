@@ -25,7 +25,7 @@ public final class PrecipitationOff extends JavaPlugin {
             logger.info("\"list.json\" created");
         } catch (Exception ignored) {}
 
-        Objects.requireNonNull(this.getCommand("select")).setExecutor(new Select());
+        Objects.requireNonNull(this.getCommand("pptoff select")).setExecutor(new Select());
         logger.info("Enabled");
     }
 

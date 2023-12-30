@@ -3,10 +3,11 @@ package vodzinskiy.precipitationoff.models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
+import java.util.UUID;
+
 @AllArgsConstructor
-public class Coordinate {
-    private int x;
-    private int y;
-    private int z;
+@Getter
+public class Owner {
+    private UUID uuid;
+    private String name;
 }
