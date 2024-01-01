@@ -7,16 +7,19 @@ import vodzinskiy.precipitationoff.services.AreaService;
 
 public class SelectCommand extends Subcommand {
 
+    AreaService  areaService;
+
     public SelectCommand() {
         super("select");
+        areaService = new AreaService();
     }
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         if (commandSender instanceof Player player) {
-            AreaService.selection(new Coordinate(player.getLocation().getBlockX(),
+
+            areaService.selection(new Coordinate(player.getLocation().getBlockX(),
                             player.getLocation().getBlockY(),
                             player.getLocation().getBlockZ()),
-                    null,
                     commandSender,
                     player.getWorld());
         }

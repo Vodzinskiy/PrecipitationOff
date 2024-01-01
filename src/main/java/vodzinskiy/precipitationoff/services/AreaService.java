@@ -18,50 +18,44 @@ import vodzinskiy.precipitationoff.models.Owner;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static org.bukkit.plugin.java.JavaPlugin.getPlugin;
 import static vodzinskiy.precipitationoff.PrecipitationOff.logger;
 
 public class AreaService {
 
-    public static void selection(Coordinate coordinate, String name, CommandSender commandSender, World world) {
+    public void selection(Coordinate coordinate, CommandSender commandSender, World world) {
         if (commandSender instanceof Player player) {
-            Map<String, Area> data = new LinkedHashMap<>();
+            List<Area> data = new ArrayList<>();
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            Type type = new TypeToken<Map<String, Area>>() {
-            }.getType();
+            Type type = new TypeToken<List<Area>>() {}.getType();
 
             try (FileReader reader = new FileReader("./plugins/PrecipitationOff/area-list.json")) {
-                Map<String, Area> loadedData = gson.fromJson(reader, type);
+                List<Area> loadedData = gson.fromJson(reader, type);
+
                 if (loadedData != null) {
                     data = loadedData;
-                    Area area = data.values().stream().reduce((first, second) -> second).orElse(null);
-                    assert area != null;
+                }
+
+                Area area = data.stream()
+                        .filter(a -> a.getOwner().getName().equals(player.getName()))
+                        .reduce((a,b) -> b)
+                        .orElse(null);
+
+                if (area != null) {
                     if (area.getEnd() == null) {
                         area.setEnd(coordinate);
                         highlightPerimeter(area.getStart(), area.getEnd(), world);
                         commandSender.sendMessage("The area is defined, enter the type of change");
                     } else {
-                        if (name == null) {
-                            int num = (int) data.entrySet().stream()
-                                    .filter(entry -> entry.getKey().startsWith("area"))
-                                    .count();
-                            name = "area" + (num + 1);
-                        }
-                        data.put(name, new Area(coordinate, new Owner(player.getUniqueId(), player.getName())));
+                        data.add(new Area(coordinate, new Owner(player.getUniqueId(), player.getName())));
                         commandSender.sendMessage("Start selected, please select the end");
                     }
                 } else {
-                    if (name == null) {
-                        name = "area1";
-                    }
-                    data.put(name, new Area(coordinate, new Owner(player.getUniqueId(), player.getName())));
+                    data.add(new Area(coordinate, new Owner(player.getUniqueId(), player.getName())));
                     commandSender.sendMessage("Start selected, please select the end");
                 }
-
                 try (FileWriter writer = new FileWriter("./plugins/PrecipitationOff/area-list.json")) {
                     gson.toJson(data, writer);
                 } catch (Exception ignored) {
@@ -72,7 +66,7 @@ public class AreaService {
         }
     }
 
-    private static void highlightPerimeter(Coordinate start, Coordinate end, World world) {
+    private void highlightPerimeter(Coordinate start, Coordinate end, World world) {
 
         int x1 = start.getX();
         int y1 = start.getY();

@@ -13,6 +13,7 @@ import static vodzinskiy.precipitationoff.models.Type.NOT_DEFINED;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Area {
+    private String name;
     private Coordinate start;
     private Coordinate end;
     private Type type = NOT_DEFINED;
