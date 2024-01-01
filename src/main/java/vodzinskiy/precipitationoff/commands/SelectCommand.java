@@ -1,17 +1,17 @@
 package vodzinskiy.precipitationoff.commands;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import vodzinskiy.precipitationoff.models.Coordinate;
 import vodzinskiy.precipitationoff.services.AreaService;
 
-public class Select implements CommandExecutor {
-    @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+public class SelectCommand extends Subcommand {
 
+    public SelectCommand() {
+        super("select");
+    }
+    @Override
+    public void execute(CommandSender commandSender, String[] args) {
         if (commandSender instanceof Player player) {
             AreaService.selection(new Coordinate(player.getLocation().getBlockX(),
                             player.getLocation().getBlockY(),
@@ -20,6 +20,5 @@ public class Select implements CommandExecutor {
                     commandSender,
                     player.getWorld());
         }
-        return true;
     }
 }

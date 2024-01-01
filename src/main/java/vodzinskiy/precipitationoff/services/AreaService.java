@@ -43,7 +43,7 @@ public class AreaService {
                     if (area.getEnd() == null) {
                         area.setEnd(coordinate);
                         highlightPerimeter(area.getStart(), area.getEnd(), world);
-                        commandSender.sendMessage("The area is defined, enter the type of change\n use /pptoff set <change> <name>");
+                        commandSender.sendMessage("The area is defined, enter the type of change");
                     } else {
                         if (name == null) {
                             int num = (int) data.entrySet().stream()
@@ -59,6 +59,7 @@ public class AreaService {
                         name = "area1";
                     }
                     data.put(name, new Area(coordinate, new Owner(player.getUniqueId(), player.getName())));
+                    commandSender.sendMessage("Start selected, please select the end");
                 }
 
                 try (FileWriter writer = new FileWriter("./plugins/PrecipitationOff/area-list.json")) {
