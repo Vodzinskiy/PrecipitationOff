@@ -1,9 +1,5 @@
 package vodzinskiy.precipitationoff.services;
 
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.World;
@@ -15,54 +11,42 @@ import vodzinskiy.precipitationoff.models.Area;
 import vodzinskiy.precipitationoff.models.Coordinate;
 import vodzinskiy.precipitationoff.models.Owner;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.lang.reflect.Type;
 import java.util.*;
 
 import static org.bukkit.plugin.java.JavaPlugin.getPlugin;
-import static vodzinskiy.precipitationoff.PrecipitationOff.logger;
 
 public class AreaService {
 
+    JsonService jsonService;
+
+    public AreaService() {
+        this.jsonService = new JsonService();
+    }
+
     public void selection(Coordinate coordinate, CommandSender commandSender, World world) {
         if (commandSender instanceof Player player) {
-            List<Area> data = new ArrayList<>();
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            Type type = new TypeToken<List<Area>>() {}.getType();
+            List<Area> data = jsonService.get();
 
-            try (FileReader reader = new FileReader("./plugins/PrecipitationOff/area-list.json")) {
-                List<Area> loadedData = gson.fromJson(reader, type);
+            if (data == null) {
+                return;
+            }
 
-                if (loadedData != null) {
-                    data = loadedData;
-                }
+            Area area = jsonService.getLastArea(data, player.getName());
 
-                Area area = data.stream()
-                        .filter(a -> a.getOwner().getName().equals(player.getName()))
-                        .reduce((a,b) -> b)
-                        .orElse(null);
-
-                if (area != null) {
-                    if (area.getEnd() == null) {
-                        area.setEnd(coordinate);
-                        highlightPerimeter(area.getStart(), area.getEnd(), world);
-                        commandSender.sendMessage("The area is defined, enter the type of change");
-                    } else {
-                        data.add(new Area(coordinate, new Owner(player.getUniqueId(), player.getName())));
-                        commandSender.sendMessage("Start selected, please select the end");
-                    }
+            if (area != null) {
+                if (area.getEnd() == null) {
+                    area.setEnd(coordinate);
+                    highlightPerimeter(area.getStart(), area.getEnd(), world);
+                    commandSender.sendMessage("The area is defined, enter the type of change");
                 } else {
                     data.add(new Area(coordinate, new Owner(player.getUniqueId(), player.getName())));
                     commandSender.sendMessage("Start selected, please select the end");
                 }
-                try (FileWriter writer = new FileWriter("./plugins/PrecipitationOff/area-list.json")) {
-                    gson.toJson(data, writer);
-                } catch (Exception ignored) {
-                }
-            } catch (Exception e) {
-                logger.error("area-list.json file is missing!\n" + e);
+            } else {
+                data.add(new Area(coordinate, new Owner(player.getUniqueId(), player.getName())));
+                commandSender.sendMessage("Start selected, please select the end");
             }
+            jsonService.set(data);
         }
     }
 
