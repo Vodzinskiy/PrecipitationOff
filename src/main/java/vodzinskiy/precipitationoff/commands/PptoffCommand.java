@@ -17,6 +17,8 @@ public class PptoffCommand implements CommandExecutor {
         AreaService areaService = new AreaService();
         subcommands.add(new SelectCommand(areaService));
         subcommands.add(new SetCommand(areaService));
+        subcommands.add(new ListCommand());
+        subcommands.add(new DeleteCommand(areaService));
     }
 
     @Override

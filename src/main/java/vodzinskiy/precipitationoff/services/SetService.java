@@ -34,7 +34,7 @@ public class SetService implements Listener {
     }
 
     public void set(CommandSender sender, String[] args) {
-        List<Area> data = jsonService.get();
+        List<Area> data = jsonService.getAll();
         if (data == null) {
             return;
         }
@@ -83,7 +83,7 @@ public class SetService implements Listener {
         BlockState newState = event.getNewState();
         if (newState.getType() == Material.SNOW) {
             Block block = event.getBlock();
-            List<Area> areas = jsonService.get();
+            List<Area> areas = jsonService.getAll();
             for (Area area: areas) {
                 if (area.getType() == NO_SNOW_FORMATION) {
                     int x1 = Math.min(area.getStart().getX(), area.getEnd().getX());

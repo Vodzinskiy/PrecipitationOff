@@ -4,7 +4,6 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import me.lucko.commodore.Commodore;
-import vodzinskiy.precipitationoff.models.Type;
 
 public class CommodoreCommands {
     public static void registerCompletions(Commodore commodore) {

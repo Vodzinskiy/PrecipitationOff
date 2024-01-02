@@ -1,14 +1,23 @@
 package vodzinskiy.precipitationoff.commands;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
+import vodzinskiy.precipitationoff.services.ListService;
 
-public class ListCommand implements CommandExecutor {
+public class ListCommand extends Subcommand {
+
+    ListService listService;
+
+    public ListCommand() {
+        super("list");
+        listService = new ListService();
+    }
+
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        commandSender.sendMessage("LIST");
-        return true;
+    public void execute(CommandSender sender, String[] args) {
+        if (args.length >= 2) {
+            sender.sendMessage("Unknown argument");
+            return;
+        }
+        listService.printList(sender);
     }
 }

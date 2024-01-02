@@ -35,7 +35,7 @@ public class AreaService {
         }
 
         if (commandSender instanceof Player player) {
-            List<Area> data = jsonService.get();
+            List<Area> data = jsonService.getAll();
 
             if (data == null) {
                 return;

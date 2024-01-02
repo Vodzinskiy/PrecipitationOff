@@ -26,7 +26,7 @@ public class JsonService {
 
 
 
-    public List<Area> get() {
+    public List<Area> getAll() {
         Type type = new TypeToken<List<Area>>() {}.getType();
         try (FileReader reader = new FileReader(path)) {
             List<Area> json = gson.fromJson(reader, type);
@@ -52,8 +52,24 @@ public class JsonService {
                 .orElse(null);
     }
 
+    public Area getByName(String name) {
+        List<Area> areas = getAll();
+        for(Area area : areas) {
+            if(area.getName().equals(name)) {
+                return area;
+            }
+        }
+        return null;
+    }
+
+    public List<Area> getAllByName(String name) {
+        return getAll().stream()
+                .filter(a -> a.getOwner().getName().equals(name))
+                .toList();
+    }
+
     public void deleteArea(UUID id) {
-        List<Area> areas = get();
+        List<Area> areas = getAll();
         for(int i = 0; i < areas.size(); i++) {
             Area area = areas.get(i);
             if(area.getId().equals(id)) {
