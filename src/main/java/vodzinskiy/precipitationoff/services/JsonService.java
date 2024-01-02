@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static vodzinskiy.precipitationoff.PrecipitationOff.logger;
 
@@ -49,5 +50,17 @@ public class JsonService {
                 .filter(a -> a.getOwner().getName().equals(name))
                 .reduce((a,b) -> b)
                 .orElse(null);
+    }
+
+    public void deleteArea(UUID id) {
+        List<Area> areas = get();
+        for(int i = 0; i < areas.size(); i++) {
+            Area area = areas.get(i);
+            if(area.getId().equals(id)) {
+                areas.remove(i);
+                break;
+            }
+        }
+        set(areas);
     }
 }

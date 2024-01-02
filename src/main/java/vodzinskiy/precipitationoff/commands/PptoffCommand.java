@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+import vodzinskiy.precipitationoff.services.AreaService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,9 @@ public class PptoffCommand implements CommandExecutor {
     private final List<Subcommand> subcommands = new ArrayList<>();
 
     public PptoffCommand() {
-        subcommands.add(new SelectCommand());
-        subcommands.add(new SetCommand());
+        AreaService areaService = new AreaService();
+        subcommands.add(new SelectCommand(areaService));
+        subcommands.add(new SetCommand(areaService));
     }
 
     @Override

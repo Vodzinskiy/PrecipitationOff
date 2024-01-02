@@ -1,6 +1,5 @@
 package vodzinskiy.precipitationoff.services;
 
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -23,16 +22,18 @@ public class SetService implements Listener {
 
     JsonService jsonService;
 
+    AreaService areaService;
+
+    public SetService(AreaService areaService) {
+        this.areaService = areaService;
+        this.jsonService = new JsonService();
+    }
+
     public SetService() {
         this.jsonService = new JsonService();
     }
 
     public void set(CommandSender sender, String[] args) {
-        /*if (args.length == 1) {
-            sender.sendMessage(Color.RED + "Invalid command syntax");
-            sender.sendMessage("Please specify the type of weather change");
-            return;
-        }*/
         List<Area> data = jsonService.get();
         if (data == null) {
             return;
@@ -73,6 +74,7 @@ public class SetService implements Listener {
             area.setType(type);
             area.setName(areaName);
             jsonService.set(data);
+            areaService.clearHighlight(area.getId());
         }
     }
 

@@ -1,14 +1,15 @@
 package vodzinskiy.precipitationoff.commands;
 
 import org.bukkit.command.CommandSender;
+import vodzinskiy.precipitationoff.services.AreaService;
 import vodzinskiy.precipitationoff.services.SetService;
 
 public class SetCommand extends Subcommand  {
 
     SetService setService;
-    public SetCommand() {
+    public SetCommand(AreaService areaService) {
         super("setNoSnowFormation");
-        setService = new SetService();
+        setService = new SetService(areaService);
     }
 
     @Override

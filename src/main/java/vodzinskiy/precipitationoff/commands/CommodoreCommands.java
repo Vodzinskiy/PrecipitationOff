@@ -10,7 +10,8 @@ public class CommodoreCommands {
     public static void registerCompletions(Commodore commodore) {
 
         LiteralArgumentBuilder<?> literalBuilder = LiteralArgumentBuilder.literal("pptoff")
-                .then(LiteralArgumentBuilder.literal("select"))
+                .then(LiteralArgumentBuilder.literal("select")
+                        .then(LiteralArgumentBuilder.literal("cancel")))
                 .then(LiteralArgumentBuilder.literal("list"))
                 .then(LiteralArgumentBuilder.literal("delete")
                         .then(LiteralArgumentBuilder.literal("all"))
