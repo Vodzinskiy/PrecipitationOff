@@ -19,13 +19,9 @@ public class CommodoreCommands {
                         .then(LiteralArgumentBuilder.literal("all"))
                         .then(LiteralArgumentBuilder.literal("stop"))
                         .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())))
-                .then(LiteralArgumentBuilder.literal("set")
-                        .then(LiteralArgumentBuilder.literal(Type.STANDARD.toString().toLowerCase())
-                                .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())))
-                        .then(LiteralArgumentBuilder.literal(Type.NO_PRECIPITATION.toString().toLowerCase())
-                                .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())))
-                        .then(LiteralArgumentBuilder.literal(Type.NO_SNOW_FORMATION.toString().toLowerCase())
-                                .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word()))));
+                .then(LiteralArgumentBuilder.literal("setNoSnowFormation")
+                        .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())));
+
         commodore.register(literalBuilder);
     }
 }

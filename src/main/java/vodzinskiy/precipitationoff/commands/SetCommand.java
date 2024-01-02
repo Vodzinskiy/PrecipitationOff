@@ -7,7 +7,7 @@ public class SetCommand extends Subcommand  {
 
     SetService setService;
     public SetCommand() {
-        super("set");
+        super("setNoSnowFormation");
         setService = new SetService();
     }
 

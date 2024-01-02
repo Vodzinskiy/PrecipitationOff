@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import me.lucko.commodore.Commodore;
 import me.lucko.commodore.CommodoreProvider;
+import vodzinskiy.precipitationoff.services.SetService;
 
 
 public final class PrecipitationOff extends JavaPlugin {
@@ -26,7 +27,7 @@ public final class PrecipitationOff extends JavaPlugin {
             Files.newBufferedWriter(yamlPath);
             logger.info("\"list.json\" created");
         } catch (Exception ignored) {}
-
+        this.getServer().getPluginManager().registerEvents(new SetService(), this);
         PluginCommand pptoff = this.getCommand("pptoff");
         if (pptoff != null) {
             PptoffCommand pptoffCommand = new PptoffCommand();
@@ -43,8 +44,6 @@ public final class PrecipitationOff extends JavaPlugin {
                 logger.warn("Failed to initialize commodore command completion", t);
             }
         }
-
-        logger.info("Enabled");
     }
 
 
