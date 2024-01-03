@@ -17,6 +17,10 @@ public class DeleteService {
 
     public void deleteByName(String name, UUID id, CommandSender sender) {
         Area area = jsonService.getByName(name);
+        if (area == null) {
+            sender.sendMessage("Area with the name \"" + name + "\" was not found");
+            return;
+        }
         if (area.getOwner().getUuid().equals(id)) {
             jsonService.deleteArea(area.getId());
             sender.sendMessage("Deleted");

@@ -34,12 +34,21 @@ public class SetService implements Listener {
     }
 
     public void set(CommandSender sender, String[] args) {
+        if (args.length >= 3) {
+            sender.sendMessage("Unknown argument");
+            return;
+        }
         List<Area> data = jsonService.getAll();
         if (data == null) {
             return;
         }
-        if (args.length >= 2) {
-            setType(sender, args[1], Type.valueOf(args[1].toUpperCase()), data);
+        if (args.length == 2) {
+
+            if (nameVerification(args[1], sender, data)) {
+                return;
+            }
+
+            setType(sender, args[1], data);
         } else {
             String name;
 
@@ -56,11 +65,11 @@ public class SetService implements Listener {
                 }
                 name = "area" + nextIndex;
             }
-            setType(sender, name, NO_SNOW_FORMATION, data);
+            setType(sender, name, data);
         }
     }
 
-    private void setType(CommandSender sender, String areaName, Type type, List<Area> data) {
+    private void setType(CommandSender sender, String areaName, List<Area> data) {
         if (sender instanceof Player player) {
             Area area = jsonService.getLastArea(data, player.getName());
             if (area == null || area.getType() != NOT_DEFINED) {
@@ -71,12 +80,27 @@ public class SetService implements Listener {
                 sender.sendMessage("Please specify the end of the area");
                 return;
             }
-            area.setType(type);
+            area.setType(Type.NO_SNOW_FORMATION);
             area.setName(areaName);
             jsonService.set(data);
             areaService.clearHighlight(area.getId());
         }
     }
+
+    private boolean nameVerification(String name, CommandSender sender, List<Area> areas) {
+        if (name.equals("all") || name.equals("stop")) {
+            sender.sendMessage("Invalid name");
+            return true;
+        }
+        for (Area a : areas) {
+            if (a.getName().equals(name)) {
+                sender.sendMessage("Name already exists");
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @EventHandler
     public void onBlockForm(BlockFormEvent event) {
@@ -84,7 +108,7 @@ public class SetService implements Listener {
         if (newState.getType() == Material.SNOW) {
             Block block = event.getBlock();
             List<Area> areas = jsonService.getAll();
-            for (Area area: areas) {
+            for (Area area : areas) {
                 if (area.getType() == NO_SNOW_FORMATION) {
                     int x1 = Math.min(area.getStart().getX(), area.getEnd().getX());
                     int x2 = Math.max(area.getStart().getX(), area.getEnd().getX());
@@ -99,4 +123,3 @@ public class SetService implements Listener {
         }
     }
 }
-

@@ -18,7 +18,7 @@ public class ListService {
 
     public void printList(CommandSender sender) {
         if (sender instanceof Player player) {
-            List<Area> areas = jsonService.getAllByName(player.getName()).stream()
+            List<Area> areas = jsonService.getAllByName(player.getUniqueId()).stream()
                     .filter(a -> !a.getType().equals(NOT_DEFINED))
                     .toList();
             StringBuilder str = new StringBuilder();

@@ -17,7 +17,8 @@ public class CommodoreCommands {
                         .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())))
                 .then(LiteralArgumentBuilder.literal("show")
                         .then(LiteralArgumentBuilder.literal("all"))
-                        .then(LiteralArgumentBuilder.literal("stop"))
+                        .then(LiteralArgumentBuilder.literal("stop")
+                                .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())))
                         .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())))
                 .then(LiteralArgumentBuilder.literal("setNoSnowFormation")
                         .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())));

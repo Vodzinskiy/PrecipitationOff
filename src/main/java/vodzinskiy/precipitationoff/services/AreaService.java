@@ -65,6 +65,12 @@ public class AreaService {
             }
 
             if (area != null) {
+                if (area.getType() != NOT_DEFINED) {
+                    commandSender.sendMessage("The area has already been selected, " +
+                            "\n please use the /pptoff setNoSnowFormation <name> command");
+                    return;
+                }
+
                 if (area.getEnd() == null) {
                     area.setEnd(coordinate);
                     highlightPerimeter(area, world);

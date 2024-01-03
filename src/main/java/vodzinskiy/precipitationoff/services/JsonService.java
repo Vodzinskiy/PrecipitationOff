@@ -62,9 +62,9 @@ public class JsonService {
         return null;
     }
 
-    public List<Area> getAllByName(String name) {
+    public List<Area> getAllByName(UUID id) {
         return getAll().stream()
-                .filter(a -> a.getOwner().getName().equals(name))
+                .filter(a -> a.getOwner().getUuid().equals(id))
                 .toList();
     }
 
