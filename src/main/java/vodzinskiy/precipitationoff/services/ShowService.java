@@ -1,7 +1,7 @@
 package vodzinskiy.precipitationoff.services;
 
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import vodzinskiy.precipitationoff.models.Area;
 
 import java.util.List;
@@ -17,19 +17,19 @@ public class ShowService {
         this.areaService = new AreaService();
     }
 
-    public void showByName(String name, UUID id, CommandSender sender, World world) {
+    public void showByName(String name, UUID id, CommandSender sender, Player player) {
         Area area = jsonService.getByName(name);
         if (area.getOwner().getUuid().equals(id)) {
-            areaService.highlightPerimeter(area, world);
+            areaService.highlightPerimeter(area, player);
         } else {
             sender.sendMessage("You do not have permission to delete this area");
         }
     }
 
-    public void showAll(UUID id, CommandSender sender, World world) {
+    public void showAll(UUID id, CommandSender sender, Player player) {
         List<Area> areas = jsonService.getAllByName(id);
         for (Area a : areas) {
-            showByName(a.getName(), id, sender, world);
+            showByName(a.getName(), id, sender, player);
         }
     }
 

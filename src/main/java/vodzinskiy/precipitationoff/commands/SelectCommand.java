@@ -20,7 +20,6 @@ public class SelectCommand extends Subcommand {
                             player.getLocation().getBlockY(),
                             player.getLocation().getBlockZ()),
                     commandSender,
-                    player.getWorld(),
                     args);
         }
     }

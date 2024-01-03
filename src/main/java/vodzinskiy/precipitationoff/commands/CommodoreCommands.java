@@ -22,7 +22,6 @@ public class CommodoreCommands {
                         .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())))
                 .then(LiteralArgumentBuilder.literal("setNoSnowFormation")
                         .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())));
-
         commodore.register(literalBuilder);
     }
 }

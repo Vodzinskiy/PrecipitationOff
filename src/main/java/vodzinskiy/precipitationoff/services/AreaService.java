@@ -2,7 +2,6 @@ package vodzinskiy.precipitationoff.services;
 
 import org.bukkit.Color;
 import org.bukkit.Particle;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -28,7 +27,7 @@ public class AreaService {
         areas = new HashMap<>();
     }
 
-    public void selection(Coordinate coordinate, CommandSender commandSender, World world, String[] args) {
+    public void selection(Coordinate coordinate, CommandSender commandSender, String[] args) {
         if (args.length >= 3) {
             commandSender.sendMessage("Unknown argument");
             return;
@@ -65,15 +64,14 @@ public class AreaService {
             }
 
             if (area != null) {
-                if (area.getType() != NOT_DEFINED) {
+                if (area.getType() == NOT_DEFINED && area.getEnd() != null) {
                     commandSender.sendMessage("The area has already been selected, " +
                             "\n please use the /pptoff setNoSnowFormation <name> command");
                     return;
                 }
-
                 if (area.getEnd() == null) {
                     area.setEnd(coordinate);
-                    highlightPerimeter(area, world);
+                    highlightPerimeter(area, player);
                     commandSender.sendMessage("The area is defined, enter the type of change");
                 } else {
                     data.add(new Area(coordinate, new Owner(player.getUniqueId(), player.getName())));
@@ -87,7 +85,7 @@ public class AreaService {
         }
     }
 
-    public void highlightPerimeter(Area area, World world) {
+    public void highlightPerimeter(Area area, Player player) {
         int x1 = area.getStart().getX();
         int y1 = area.getStart().getY();
         int z1 = area.getStart().getZ();
@@ -114,15 +112,15 @@ public class AreaService {
 
                 for (int x = minX; x <= maxX; x++) {
                     for (int y = minY; y < maxY; y++) {
-                        world.spawnParticle(Particle.REDSTONE, x, y, minZ, 1, 0, 0, 0, 1, dustOptions);
-                        world.spawnParticle(Particle.REDSTONE, x, y, maxZ, 1, 0, 0, 0, 1, dustOptions);
+                        player.spawnParticle(Particle.REDSTONE, x, y, minZ, 1, 0, 0, 0, 1, dustOptions);
+                        player.spawnParticle(Particle.REDSTONE, x, y, maxZ, 1, 0, 0, 0, 1, dustOptions);
                     }
                 }
 
                 for (int z = minZ + 1; z < maxZ; z++) {
                     for (int y = minY; y < maxY; y++) {
-                        world.spawnParticle(Particle.REDSTONE, minX, y, z, 1, 0, 0, 0, 1, dustOptions);
-                        world.spawnParticle(Particle.REDSTONE, maxX, y, z, 1, 0, 0, 0, 1, dustOptions);
+                        player.spawnParticle(Particle.REDSTONE, minX, y, z, 1, 0, 0, 0, 1, dustOptions);
+                        player.spawnParticle(Particle.REDSTONE, maxX, y, z, 1, 0, 0, 0, 1, dustOptions);
                     }
                 }
             }

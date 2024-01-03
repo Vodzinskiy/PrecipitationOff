@@ -31,11 +31,11 @@ public class ShowCommand extends Subcommand {
             }
 
             if (args[1].equals("all")) {
-                showService.showAll(player.getUniqueId(), sender, player.getWorld());
+                showService.showAll(player.getUniqueId(), sender, player);
             } else if (args[1].equals("stop")) {
                 showService.stopShowing(player.getUniqueId(), sender);
             } else {
-                showService.showByName(args[1], player.getUniqueId(), sender, player.getWorld());
+                showService.showByName(args[1], player.getUniqueId(), sender, player);
             }
         }
 
