@@ -7,7 +7,7 @@ import vodzinskiy.precipitationoff.services.DeleteService;
 
 public class DeleteCommand extends Subcommand {
 
-    DeleteService deleteService;
+    private final DeleteService deleteService;
     public DeleteCommand(AreaService areaService) {
         super("delete");
         deleteService = new DeleteService(areaService);

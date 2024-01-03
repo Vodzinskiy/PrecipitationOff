@@ -6,7 +6,7 @@ import vodzinskiy.precipitationoff.services.SetService;
 
 public class SetCommand extends Subcommand  {
 
-    SetService setService;
+    private final SetService setService;
     public SetCommand(AreaService areaService) {
         super("setNoSnowFormation");
         setService = new SetService(areaService);

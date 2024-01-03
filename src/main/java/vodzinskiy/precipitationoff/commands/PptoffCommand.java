@@ -20,6 +20,7 @@ public class PptoffCommand implements CommandExecutor {
         subcommands.add(new ListCommand());
         subcommands.add(new DeleteCommand(areaService));
         subcommands.add(new ShowCommand());
+        subcommands.add(new LockCommand());
     }
 
     @Override

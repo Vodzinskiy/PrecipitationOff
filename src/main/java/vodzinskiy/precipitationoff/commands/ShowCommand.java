@@ -6,7 +6,7 @@ import vodzinskiy.precipitationoff.services.ShowService;
 
 public class ShowCommand extends Subcommand {
 
-    ShowService showService;
+    private final ShowService showService;
 
     public ShowCommand() {
         super("show");

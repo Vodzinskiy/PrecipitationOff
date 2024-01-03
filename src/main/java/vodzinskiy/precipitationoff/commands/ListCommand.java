@@ -5,7 +5,7 @@ import vodzinskiy.precipitationoff.services.ListService;
 
 public class ListCommand extends Subcommand {
 
-    ListService listService;
+    private final ListService listService;
 
     public ListCommand() {
         super("list");

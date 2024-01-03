@@ -7,7 +7,7 @@ import vodzinskiy.precipitationoff.services.AreaService;
 
 public class SelectCommand extends Subcommand {
 
-    AreaService areaService;
+    private final AreaService areaService;
 
     public SelectCommand(AreaService areaService) {
         super("select");

@@ -21,7 +21,12 @@ public class CommodoreCommands {
                                 .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())))
                         .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())))
                 .then(LiteralArgumentBuilder.literal("setNoSnowFormation")
-                        .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())));
+                        .then(RequiredArgumentBuilder.argument("name", StringArgumentType.word())))
+                .then(LiteralArgumentBuilder.literal("lock")
+                        .then(LiteralArgumentBuilder.literal("clear"))
+                        .then(LiteralArgumentBuilder.literal("rain"))
+                        .then(LiteralArgumentBuilder.literal("thunder"))
+                        .then(LiteralArgumentBuilder.literal("reset")));
         commodore.register(literalBuilder);
     }
 }
