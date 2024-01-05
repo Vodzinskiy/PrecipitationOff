@@ -43,11 +43,9 @@ public class SetService implements Listener {
             return;
         }
         if (args.length == 2) {
-
             if (nameVerification(args[1], sender, data)) {
                 return;
             }
-
             setType(sender, args[1], data);
         } else {
             String name;
@@ -93,9 +91,11 @@ public class SetService implements Listener {
             return true;
         }
         for (Area a : areas) {
-            if (a.getName().equals(name)) {
-                sender.sendMessage("Name already exists");
-                return true;
+            if (a.getName() != null) {
+                if (a.getName().equals(name)) {
+                    sender.sendMessage("Name already exists");
+                    return true;
+                }
             }
         }
         return false;
